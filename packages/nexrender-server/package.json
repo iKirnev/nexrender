@@ -20,11 +20,16 @@
     "@nexrender/types": "^1.0.0",
     "arg": "^4.1.0",
     "chalk": "^2.4.2",
+    "dotenv": "^8.0.0",
     "micro": "^9.3.3",
-    "microrouter": "^3.1.3"
+    "microrouter": "^3.1.3",
+    "mongodb": "^3.2.6"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "84cef65e008026f6fcf4f040943144401f101fce"
+  "gitHead": "84cef65e008026f6fcf4f040943144401f101fce",
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  }
 }
