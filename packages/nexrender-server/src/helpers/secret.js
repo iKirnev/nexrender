@@ -5,8 +5,8 @@ const withSecret = (secret, handler) => (req, res) => {
         return handler(req, res)
     }
 
-    if (req.headers['cartender-secret'] != secret) {
-        return send(res, 403, 'Wrong or no authentication secret provided. Please check the "cartender-secret" header.')
+    if (req.headers['nexrender-secret'] != secret) {
+        return send(res, 403, 'Wrong or no authentication secret provided. Please check the "nexrender-secret" header.')
     }
 
     return handler(req, res)
