@@ -15,9 +15,9 @@
     "requireg": "^0.2.1"
   },
   "peerDependencies": {
-    "@nexrender/action-copy": "^1.0.0",
-    "@nexrender/action-encode": "^1.0.0",
-    "@nexrender/provider-s3": "^1.0.0"
+    "@nexrender/action-copy": "file:../nexrender-action-copy",
+    "@nexrender/action-encode": "file:../nexrender-action-encode",
+    "@nexrender/provider-s3": "file:../nexrender-provider-s3"
   },
   "publishConfig": {
     "access": "public"
