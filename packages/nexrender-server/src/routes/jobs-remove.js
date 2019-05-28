@@ -2,10 +2,10 @@ const { send }   = require('micro')
 const { removeJob }  = require('../helpers/mongo')
 
 module.exports = async (req, res) => {
-    console.log(`removing job ${req.params._id}`)
+    console.log(`removing job ${req.params.uid}`)
 
     try {
-        await removeJob(req.params._id);
+        await removeJob(req.params.uid);
     } catch (err) {
         return send(res, 400, err)
     }
