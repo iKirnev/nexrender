@@ -54,8 +54,8 @@ const constructParams = (job, settings, { preset, input, output, params }) => {
     if (!path.isAbsolute(input)) input = path.join(job.workpath, input);
     if (!path.isAbsolute(output)) output = path.join(job.workpath, output);
 
-    settings.logger.log(`[${job.uid}] action-encode: input file ${input}`)
-    settings.logger.log(`[${job.uid}] action-encode: output file ${output}`)
+    settings.logger.log(`[${job._id}] action-encode: input file ${input}`)
+    settings.logger.log(`[${job._id}] action-encode: output file ${output}`)
 
     switch(preset) {
         case 'mp4':
@@ -134,7 +134,7 @@ module.exports = (job, settings, options, type) => {
         throw new Error(`Action ${name} can be only run in postrender mode, you provided: ${type}.`)
     }
 
-    settings.logger.log(`[${job.uid}] starting action-encode action (ffmpeg)`)
+    settings.logger.log(`[${job._id}] starting action-encode action (ffmpeg)`)
 
     return new Promise((resolve, reject) => {
         const params = constructParams(job, settings, options);
@@ -142,8 +142,8 @@ module.exports = (job, settings, options, type) => {
             const instance = spawn(binary, params);
 
             instance.on('error', err => reject(new Error(`Error starting ffmpeg process: ${err}`)));
-            instance.stderr.on('data', (data) => settings.logger.log(`[${job.uid}] ${data.toString()}`));
-            instance.stdout.on('data', (data) => settings.debug && settings.logger.log(`[${job.uid}] ${data.toString()}`));
+            instance.stderr.on('data', (data) => settings.logger.log(`[${job._id}] ${data.toString()}`));
+            instance.stdout.on('data', (data) => settings.debug && settings.logger.log(`[${job._id}] ${data.toString()}`));
 
             /* on finish (code 0 - success, other - error) */
             instance.on('close', (code) => {
