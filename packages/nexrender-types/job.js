@@ -1,5 +1,4 @@
 const assert = require('assert')
-const nanoid = require('nanoid')
 
 /**
  * Take an optional minimal job json/object
@@ -9,7 +8,6 @@ const nanoid = require('nanoid')
  * @return {Object}
  */
 const create = job => Object.assign({
-    uid: nanoid(),
     type: 'default',
     state: 'created',
     output: '',
@@ -41,7 +39,6 @@ const create = job => Object.assign({
  * @return {Boolean}
  */
 const validate = job => {
-    assert(job.uid, 'job must have uid');
     assert(job.state, 'job must have state');
 
     assert(job.template, 'job must have template object defined');
