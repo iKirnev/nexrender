@@ -18,7 +18,7 @@ const PromiseSerial = handlers => handlers.reduce(
  * @return {Function}
  */
 module.exports = actionType => (job, settings) => {
-    settings.logger.log(`[${job.uid}] applying ${actionType} actions...`);
+    settings.logger.log(`[${job._id}] applying ${actionType} actions...`);
 
     return PromiseSerial((job.actions[actionType] || []).map(action => () => {
         return requireg(action.module)(job, settings, action, actionType).catch(err => {
