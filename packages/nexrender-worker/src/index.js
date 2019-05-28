@@ -52,7 +52,7 @@ const start = async (host, secret, settings) => {
         }
 
         try {
-            job = await client.updateJob(job.uid, job)
+            job = await client.updateJob(job._id, job)
         } catch(err) {
             console.log(`[${job.uid}] error while updating job state to ${job.state}. Job abandoned.`)
             continue;
@@ -63,12 +63,12 @@ const start = async (host, secret, settings) => {
                 job.state = 'finished';
             }
 
-            job = await client.updateJob(job.uid, job)
+            job = await client.updateJob(job._id, job)
         } catch (err) {
             job.state = 'error';
             job.error = err;
 
-            job = await client.updateJob(job.uid, job);
+            job = await client.updateJob(job._id, job);
 
             if (settings.stopOnError) {
                 throw err;
