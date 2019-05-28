@@ -23,7 +23,7 @@ const fetchJobs = async () => {
 
 
 const createJob = async entry => {
-    const now = new Date()
+    const now = new Date().getTime();
     entry = Object.assign({}, entry, {
         updatedAt: now,
         createdAt: now
@@ -34,13 +34,13 @@ const createJob = async entry => {
 }
 
 const updateJob = async (uid, entry) => {
-    const now = new Date();
+    const now = new Date().getTime();
     const data = Object.assign({}, entry, {
         updatedAt: now
     })
     delete data._id;
     const collection = db.collection('jobs');
-    const res = await collection.findOneAndUpdate({_id: ObjectID(entry._id)}, { $set: data }, {returnOriginal: false});
+    const res = await collection.findOneAndUpdate({_id: ObjectID(entry._id), updatedAt: entry.updatedAt}, { $set: data }, {returnOriginal: false});
     return res.value;
 }
 
