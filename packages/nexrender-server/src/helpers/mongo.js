@@ -41,6 +41,9 @@ const updateJob = async (uid, entry) => {
     delete data._id;
     const collection = db.collection('jobs');
     const res = await collection.findOneAndUpdate({_id: ObjectID(entry._id), updatedAt: entry.updatedAt}, { $set: data }, {returnOriginal: false});
+    if(!res.value) {
+        throw new Error(`Job did not find or someone else updated that job. Your entry updatedAt is ${entry.updatedAt}`)
+    }
     return res.value;
 }
 
