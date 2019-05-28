@@ -9,11 +9,10 @@ module.exports = async (req, res) => {
         job.state = 'queued';
     }
 
-    console.log(`creating new job ${job.uid}`)
-
     try {
         assert(validate(job) == true);
         job = await createJob(job);
+        console.log(`creating new job ${job._id}`)
     } catch (err) {
         return send(res, 400, err.stack)
     }

@@ -6,7 +6,7 @@ const withEventEmitter = (fetch, job, polling = NEXRENDER_JOB_POLLING) => {
     const emitter  = new EventEmitter();
     const interval = setInterval(async () => {
         try {
-            const updatedJob = await fetch(`/jobs/${job.uid}`)
+            const updatedJob = await fetch(`/jobs/${job._id}`)
 
             if (job.state != updatedJob.state) {
                 job.state = updatedJob.state;
@@ -39,15 +39,15 @@ module.exports = (fetch, polling) => ({
             'body': JSON.stringify(data),
         }), polling),
 
-    updateJob: async (id, data) =>
-        await fetch(`/jobs/${id}`, {
+    updateJob: async (_id, data) =>
+        await fetch(`/jobs/${_id}`, {
             'method': 'put',
             'content-type': 'application/json',
             'body': JSON.stringify(data),
         }),
 
-    removejob: async id =>
-        await fetch(`/jobs/${id}`, {
+    removejob: async _id =>
+        await fetch(`/jobs/${_id}`, {
             'method': 'delete'
         }),
 })

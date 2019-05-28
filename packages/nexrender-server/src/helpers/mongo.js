@@ -11,9 +11,9 @@ MongoClient.connect(process.env.MONGO, { useNewUrlParser: true }, function(err, 
 });
 
 /* public api */
-const fetchJob = async (uid) => {
+const fetchJob = async (_id) => {
   const collection = db.collection('jobs');
-  return await collection.findOne({uid: uid});
+  return await collection.findOne({_id: ObjectID(_id)});
 }
 
 const fetchJobs = async () => {
@@ -33,20 +33,23 @@ const createJob = async entry => {
     return entry;
 }
 
-const updateJob = async (uid, entry) => {
+const updateJob = async (_id, entry) => {
     const now = new Date().getTime();
     const data = Object.assign({}, entry, {
         updatedAt: now
     })
     delete data._id;
     const collection = db.collection('jobs');
-    const res = await collection.findOneAndUpdate({_id: ObjectID(entry._id), updatedAt: entry.updatedAt}, { $set: data }, {returnOriginal: false});
+    const res = await collection.findOneAndUpdate({_id: ObjectID(_id), updatedAt: entry.updatedAt}, { $set: data }, {returnOriginal: false});
+    if(!res.value) {
+        throw new Error(`Job did not find or someone else updated that job. Your entry updatedAt is ${entry.updatedAt}`)
+    }
     return res.value;
 }
 
-const removeJob = async uid => {
+const removeJob = async _id => {
     const collection = db.collection('jobs');
-    let job = await collection.findOne({uid: uid}); if (!job) {
+    let job = await collection.findOne({_id: ObjectID(_id)}); if (!job) {
         return null;
     }
 
