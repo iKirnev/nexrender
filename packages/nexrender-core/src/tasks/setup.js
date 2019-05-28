@@ -13,7 +13,7 @@ module.exports = (job, settings) => {
     /* fill default job fields */
     job = create(job)
 
-    settings.logger.log(`[${job.uid}] setting up job...`);
+    settings.logger.log(`[${job._id}] setting up job...`);
 
     try {
         assert(validate(job) == true)
@@ -35,7 +35,7 @@ module.exports = (job, settings) => {
     }
 
     if (job.actions.postrender.length < 1 && !settings.skipCleanup) {
-        settings.logger.log(`[${job.uid}] -- W A R N I N G: --
+        settings.logger.log(`[${job._id}] -- W A R N I N G: --
 
 You haven't provided any post-render actions!
 After render is finished all the files inside temporary folder (INCLUDING your target video) will be removed.
@@ -48,11 +48,11 @@ P.S. to prevent nexrender from removing temp file data, you also can please prov
     }
 
     // setup paths
-    job.workpath = path.join(settings.workpath, job.uid);
+    job.workpath = path.join(settings.workpath, job._id);
     job.output   = job.output || path.join(job.workpath, job.resultname);
     mkdirp.sync(job.workpath);
 
-    settings.logger.log(`[${job.uid}] working directory is: ${job.workpath}`);
+    settings.logger.log(`[${job._id}] working directory is: ${job.workpath}`);
 
     return Promise.resolve(job)
 };

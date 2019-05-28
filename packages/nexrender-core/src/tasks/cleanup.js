@@ -22,10 +22,10 @@ const rmdirRecursively = (target) => {
  */
 module.exports = function(job, settings) {
     if (!settings.skipCleanup) {
-        settings.logger.log(`[${job.uid}] cleaning up...`);
+        settings.logger.log(`[${job._id}] cleaning up...`);
         rmdirRecursively(job.workpath)
     } else {
-        settings.logger.log(`[${job.uid}] skipping the clean up...`);
+        settings.logger.log(`[${job._id}] skipping the clean up...`);
     }
 
     return Promise.resolve(job)

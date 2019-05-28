@@ -44,7 +44,7 @@ const wrapScript = ({ dest }) => (`(function() {
 })();\n`)
 
 module.exports = (job, settings) => {
-    settings.logger.log(`[${job.uid}] running script assemble...`);
+    settings.logger.log(`[${job._id}] running script assemble...`);
 
     const data = [];
     const base = job.workpath;
@@ -68,7 +68,7 @@ module.exports = (job, settings) => {
     });
 
     /* write out assembled custom script file in the workpath */
-    job.scriptfile = path.join(base, `nexrender-${job.uid}-script.jsx`);
+    job.scriptfile = path.join(base, `nexrender-${job._id}-script.jsx`);
     fs.writeFileSync(job.scriptfile, script
         .replace('/*COMPOSITION*/', job.template.composition)
         .replace('/*USERSCRIPT*/', data.join('\n'))
