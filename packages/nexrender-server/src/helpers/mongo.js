@@ -30,6 +30,9 @@ const createJob = async entry => {
     })
     const collection = db.collection('jobs');
     await collection.insertOne(entry);
+    if (entry.projectId) {
+      updateProject(entry.projectId, {"render-status": `rend-${entry.state}`, job: entry});
+    }
     return entry;
 }
 
@@ -43,6 +46,9 @@ const updateJob = async (_id, entry) => {
     const res = await collection.findOneAndUpdate({_id: ObjectID(_id), updatedAt: entry.updatedAt}, { $set: data }, {returnOriginal: false});
     if(!res.value) {
         throw new Error(`Job did not find or someone else updated that job. Your entry updatedAt is ${entry.updatedAt}`)
+    }
+    if (entry.projectId) {
+      updateProject(entry.projectId, {"render-status": `rend-${entry.state}`, job: entry});
     }
     return res.value;
 }
