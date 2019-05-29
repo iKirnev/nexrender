@@ -37,7 +37,7 @@ if (args['--help']) {
       be serving the content without any security checks.
 
       Specifying {bold --secret} argument will enable the security validator, and will check
-      for {bold nexrender-secret} header value for every incoming request.
+      for {bold cartender-secret} header value for every incoming request.
 
   {bold OPTIONS}
 

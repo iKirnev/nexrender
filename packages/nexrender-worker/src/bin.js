@@ -53,7 +53,7 @@ if (args['--help']) {
       start making api calls to fetch any existing queued project and start rendering those.
 
       Specifying {bold --secret} argument will enable the security validator, and will check
-      for {bold nexrender-secret} header value for every outgoing request.
+      for {bold cartender-secret} header value for every outgoing request.
 
   {bold OPTIONS}
 

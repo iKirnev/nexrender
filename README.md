@@ -567,7 +567,7 @@ There are 2 main ways to do that, first one - just send a direct POST request to
 ```sh
 curl \
     --request POST \
-    --header "nexrender-secret: myapisecret" \
+    --header "cartender-secret: myapisecret" \
     --header "content-type: application/json" \
     --data '{"template":{"src":"http://my.server.com/assets/project.aep","composition":"main"}}' \
     http://my.server.com:3050/api/v1/jobs
