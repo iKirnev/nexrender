@@ -4,6 +4,7 @@ const arg       = require('arg')
 const chalk     = require('chalk')
 const {start}   = require('./index')
 const {version} = require('../package.json')
+require('dotenv/config');
 
 const args = arg({
     // Types
@@ -128,17 +129,18 @@ if (args['--version']) {
     process.exit();
 }
 
-if (args['--host'])  {
-    serverHost = args['--host'] || serverHost;
+if (args['--host'] || process.env.HOST)  {
+    serverHost = args['--host'] || process.env.HOST || serverHost;
 }
 
-if (args['--secret']) {
-    serverSecret = args['--secret'] || serverSecret;
+if (args['--secret'] || process.env.SECRET) {
+    serverSecret = args['--secret'] || process.env.SECRET || serverSecret;
 }
 
 console.log(chalk`> starting {bold.cyan nexrender-worker} endpoint {bold ${serverHost}}; using secret: {bold ${serverSecret ? 'yes' : 'no'}}`)
 
 let settings = {};
+settings['workpath'] = process.env.WORKPATH;
 const opt = (key, arg) => {if (args[arg]) {
     settings[key] = args[arg];
 }}

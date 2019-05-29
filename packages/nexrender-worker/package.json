@@ -22,7 +22,8 @@
     "@nexrender/core": "file:../nexrender-core",
     "@nexrender/provider-s3": "file:../nexrender-provider-s3",
     "arg": "^4.1.0",
-    "chalk": "^2.4.2"
+    "chalk": "^2.4.2",
+    "dotenv": "^8.0.0"
   },
   "publishConfig": {
     "access": "public"
