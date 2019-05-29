@@ -4,6 +4,7 @@ const arg       = require('arg')
 const chalk     = require('chalk')
 const server    = require('./index')
 const {version} = require('../package.json')
+require('dotenv/config');
 
 const args = arg({
     // Types
@@ -64,20 +65,19 @@ if (args['--version']) {
     console.log(version);
     process.exit();
 }
-
-if (args['--port'])  {
+if (args['--port'] || process.env.PORT)  {
     const {isNaN} = Number;
-    const port = Number(args['--port']);
+    const port = Number(args['--port'] || parseInt(process.env.PORT));
     if (isNaN(port) || (!isNaN(port) && (port < 1 || port >= Math.pow(2, 16)))) {
-        console.error(`Port option must be a number within allowed range. Supplied: ${args['--port']}`);
+        console.error(`Port option must be a number within allowed range. Supplied: ${args['--port'] || parseInt(process.env.PORT)}`);
         process.exit(1);
     }
 
     serverPort = port || serverPort;
 }
 
-if (args['--secret']) {
-    serverSecret = args['--secret'] || serverSecret;
+if (args['--secret'] || process.env.SECRET) {
+    serverSecret = args['--secret'] || process.env.SECRET || serverSecret;
 }
 
 console.log(chalk`> starting {bold.cyan nexrender-server} at {bold 0.0.0.0:${serverPort}}; using secret: {bold ${serverSecret ? 'yes' : 'no'}}`)
