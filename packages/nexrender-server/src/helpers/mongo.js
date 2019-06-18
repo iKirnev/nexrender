@@ -65,10 +65,18 @@ const removeJob = async _id => {
 
 const fetchProjects = async (status, limit, set_status, bot_name, caller) => {
   const collection = db.collection('projects');
-  const docs = await collection.find(status && {'render-status': status} || {}).limit(parseInt(limit || 1000)).toArray();
+  const docs = await collection
+    .find({
+      $and: [
+        status && {'render-status': status} || {},
+        bot_name && {$or: [{'bot': bot_name}, {'bot': ''}, {'bot': {$exists: false}} ]} || {}
+      ]
+    })
+    .limit(parseInt(limit || 1000)).toArray();
   if (set_status) {
     docs.forEach((doc)=>{
-      collection.updateOne({_id: ObjectID(doc._id)} , { $set: {'render-status': set_status, ...(bot_name && {'bot-name': bot_name})}});
+      collection.updateOne({_id: ObjectID(doc._id)} , { $set: {'render-status': set_status, ...(bot_name && {'bot': bot_name})}});
+      doc.bot = bot_name;
     });
   }
   return docs;
